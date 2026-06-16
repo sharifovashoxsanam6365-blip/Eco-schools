@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Schools Platformasi</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            text-align: center;
+            background: #2a2a2a;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #aaaaaa;
+            font-weight: normal;
+            margin-bottom: 30px;
+        }
+        .status-box {
+            padding: 15px 25px;
+            background: #333333;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Kogon tuman 1-umumta'lim maktabi</h1>
+        <h2>Eco-Schools Platformasi</h2>
+        
+        <div id="status" class="status-box">Ulanmoqda...</div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+
+        const SUPABASE_URL = "https://yyxorsezjrootxnrjodu.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_aaBrjg81DoSmfZY8wrRElg_l6XokBl8";
+
+        const _supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        async function loadSchoolData() {
+            const statusDiv = document.getElementById('status');
+            
+            try {
+                const { data, error } = await _supabase
+                    .from('schools')
+                    .select('*')
+                    .limit(1);
+                
+                if (error) throw error;
+                
+                statusDiv.innerHTML = "✅ Supabase bazasiga muvaffaqiyatli ulandi!";
+                statusDiv.style.color = "#4CAF50";
+            } catch (err) {
+                statusDiv.innerHTML = "❌ Xatolik: " + err.message;
+                statusDiv.style.color = "#f44336";
+            }
+        }
+
+        loadSchoolData();
+    </script>
+</body>
+</html>
