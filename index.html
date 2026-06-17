@@ -67,7 +67,7 @@ const SUPABASE_KEY = "sb_publishable_aaBrjg81DoSmfZY8wrREIg_I6XokBl8";
             
             try {
                 const { data, error } = await _supabase
-                    .from('schools')
+                    .from('maktablar')
                     .select('*')
                     .limit(1);
                 
